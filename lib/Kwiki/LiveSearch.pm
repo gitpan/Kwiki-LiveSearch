@@ -4,7 +4,7 @@ use warnings;
 use Kwiki::Plugin '-Base';
 use mixin 'Kwiki::Installer';
 use Kwiki ':char_classes';
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 const class_id => 'livesearch';
 const class_title => 'LiveSearch';
@@ -264,7 +264,7 @@ function liveSearchDoSearch() {
 		liveSearchReq = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	liveSearchReq.onreadystatechange= liveSearchProcessReqChange;
-	liveSearchReq.open("GET", "index.cgi?action=livesearch&s=" + document.forms.searchform.s.value);
+	liveSearchReq.open("GET", "?action=livesearch&s=" + document.forms.searchform.s.value);
 	liveSearchLast = document.forms.searchform.s.value;
 	liveSearchReq.send(null);
 	}
