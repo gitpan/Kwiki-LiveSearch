@@ -2,9 +2,9 @@ package Kwiki::LiveSearch;
 use strict;
 use warnings;
 use Kwiki::Plugin '-Base';
-use Kwiki::Installer '-base';
+use mixin 'Kwiki::Installer';
 use Kwiki ':char_classes';
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 const class_id => 'livesearch';
 const class_title => 'LiveSearch';
