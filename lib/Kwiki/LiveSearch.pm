@@ -4,7 +4,7 @@ use warnings;
 use Kwiki::Plugin '-Base';
 use Kwiki::Installer '-base';
 use Kwiki ':char_classes';
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 const class_id => 'livesearch';
 const class_title => 'LiveSearch';
@@ -47,13 +47,29 @@ cgi 's';
 package Kwiki::LiveSearch;
 __DATA__
 
-=head1 NAME 
+=head1 NAME
 
 Kwiki::LiveSearch - Search and Display pagelink on the fly!
 
 =head1 SYNOPSIS
 
 =head1 DESCRIPTION
+
+B<Kwiki::LiveSearch> is a L<Kwiki> plugin that allow anyone search
+the kwiki site in a fancy way. Results are displayed right after
+you enter the text.
+
+To use this plugin, simply install L<Kwiki> and this module from CPAN,
+and do:
+
+    # echo 'Kwiki::LiveSearch' >> plugins
+    # kwiki -update
+
+Currently the code of searching text is the same from
+L<Kwiki::Search>, and it's not very efficient, your server will have
+heavy load when there are many people using this search plugin.  In
+the future the indexing algorithm should be improved to reduce the
+time and load.
 
 The code of livesearch.js come from http://blog.bitflux.ch/.
 It's modified a little to fit cgi scriptname.
@@ -113,7 +129,7 @@ __css/livesearch.css__
   }
  
   .LSRow:before {
-    content:  ' >> '; 
+    content: '>';
   }
   #LSResult {    
       position: absolute;
