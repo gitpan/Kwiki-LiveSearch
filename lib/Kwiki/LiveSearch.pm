@@ -4,7 +4,7 @@ use warnings;
 use Kwiki::Plugin '-Base';
 use Kwiki::Installer '-base';
 use Kwiki ':char_classes';
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 const class_id => 'livesearch';
 const class_title => 'LiveSearch';
@@ -74,27 +74,20 @@ See http://www.perl.com/perl/misc/Artistic.html
 =cut
 __template/tt2/livesearch_box.html__
 <!-- BEGIN livesearch_box.html -->
-<script type="text/javascript" src="javascript/livesearch.js"></script>
 <link rel="stylesheet" type="text/css" href="css/livesearch.css" />
-<form onsubmit="return liveSearchSubmit()" style="margin: 0px;" name="searchform" method="post" action="[% script_name%]" enctype="application/x-www-form-urlencoded" style="display: inline"  >
+<form onsubmit="return liveSearchSubmit()" style="margin: 0px;" name="searchform" method="get" action="[% script_name%]" enctype="application/x-www-form-urlencoded" >
 <span>Live Search</span>
-<input type="text" name="s" id="livesearch" size="8" autocomplete="off"
-    onkeypress="liveSearchStart();" />
 <input type="hidden" name="action" value="livesearch" />
+<input name="s" id="livesearch" size="8" autocomplete="off" onkeypress="liveSearchStart();" type="text"/>
 <div id="LSResult" style="display: none;"><div id="LSShadow"></div></div>
 </form>
+<script type="text/javascript" src="javascript/livesearch.js"></script>
+<script type="text/javascript"> liveSearchInit() </script>
 <!-- END livesearch_box.html -->
 __template/tt2/livesearch_result.xml__
-<?xml version='1.0' encoding='utf-8'  ?>
-<div class='LSRes'>
-[% IF pages.0 %]
-  [% FOR page = pages %]
-  <div class="LSRow">[% page.kwiki_link %]</div>
-  [% END %]
-[% ELSE %]
-  <div class="LSRow"><a>No Pages Found</a></div>
-[% END %]
-</div>
+<?xml version='1.0' encoding='utf-8'  ?><div class='LSRes'>[% IF pages.0
+ %][% FOR page = pages %]<div class="LSRow">[% page.kwiki_link %]</div>[% END %][%
+ ELSE %]<div class="LSRow"><a>No Pages Found</a></div>[% END %]</div>
 __css/livesearch.css__
   #livesearch {
   display: block;
@@ -103,7 +96,11 @@ __css/livesearch.css__
   #LSHighlight {
       background-color: lightgreen;
   }
-  
+
+  .LSRow a:hover {
+	text-decoration: underline;
+  }
+
   .LSRow {
     margin: 0px;
     line-height: 1.2em;
@@ -115,7 +112,9 @@ __css/livesearch.css__
     padding-right: 1em;
   }
  
-
+  .LSRow:before {
+    content:  ' >> '; 
+  }
   #LSResult {    
       position: absolute;
       background-color: #ccc; 
@@ -249,7 +248,7 @@ function liveSearchDoSearch() {
 		liveSearchReq = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	liveSearchReq.onreadystatechange= liveSearchProcessReqChange;
-	liveSearchReq.open("GET", "./index.cgi?action=livesearch&s=" + document.forms.searchform.s.value);
+	liveSearchReq.open("GET", "index.cgi?action=livesearch&s=" + document.forms.searchform.s.value);
 	liveSearchLast = document.forms.searchform.s.value;
 	liveSearchReq.send(null);
 	}
