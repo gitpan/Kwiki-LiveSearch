@@ -4,7 +4,7 @@ use warnings;
 use Kwiki::Plugin '-Base';
 use Kwiki::Installer '-base';
 use Kwiki ':char_classes';
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 const class_id => 'livesearch';
 const class_title => 'LiveSearch';
@@ -87,8 +87,12 @@ __template/tt2/livesearch_box.html__
 __template/tt2/livesearch_result.xml__
 <?xml version='1.0' encoding='utf-8'  ?>
 <div class='LSRes'>
-[% FOR page = pages %]
-<div class="LSRow">[% page.kwiki_link %]</div>
+[% IF pages.0 %]
+  [% FOR page = pages %]
+  <div class="LSRow">[% page.kwiki_link %]</div>
+  [% END %]
+[% ELSE %]
+  <div class="LSRow"><a>No Pages Found</a></div>
 [% END %]
 </div>
 __css/livesearch.css__
