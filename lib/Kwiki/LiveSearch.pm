@@ -1,10 +1,8 @@
 package Kwiki::LiveSearch;
-use strict;
-use warnings;
-use Kwiki::Plugin '-Base';
+use Kwiki::Plugin -Base;
 use mixin 'Kwiki::Installer';
 use Kwiki ':char_classes';
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 const class_id => 'livesearch';
 const class_title => 'LiveSearch';
@@ -38,13 +36,12 @@ sub perform_livesearch {
 }
 
 package Kwiki::LiveSearch::CGI;
-use Kwiki::CGI '-base';
+use Kwiki::CGI -base;
 
 cgi 's';
 
-1;
-
 package Kwiki::LiveSearch;
+
 __DATA__
 
 =head1 NAME
